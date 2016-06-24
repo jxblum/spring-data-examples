@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import example.springdata.multistore.customer.Customer;
+import example.springdata.multistore.gemstone.Gemstone;
 import example.springdata.multistore.shop.Order;
 
 import org.junit.Test;
@@ -26,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.gemfire.repository.query.GemfireEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.mongodb.repository.query.MongoEntityInformation;
 import org.springframework.data.repository.support.Repositories;
@@ -33,8 +35,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Integration test to check repository interfaces are assigned to the correct store modules.
- * 
+ *
  * @author Oliver Gierke
+ * @author John Blum
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,5 +52,6 @@ public class ApplicationConfigurationTest {
 
 		assertThat(repositories.getEntityInformationFor(Customer.class), is(instanceOf(JpaEntityInformation.class)));
 		assertThat(repositories.getEntityInformationFor(Order.class), is(instanceOf(MongoEntityInformation.class)));
+		assertThat(repositories.getEntityInformationFor(Gemstone.class), is(instanceOf(GemfireEntityInformation.class)));
 	}
 }
